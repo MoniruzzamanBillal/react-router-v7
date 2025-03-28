@@ -2,6 +2,7 @@ import {
   type RouteConfig,
   index,
   layout,
+  prefix,
   route,
 } from "@react-router/dev/routes";
 
@@ -12,7 +13,9 @@ export default [
 
   //   Nested Route
   layout("routes/DashBoard.tsx", [
-    route("finance", "routes/Finance.tsx"),
-    route("personalInfo", "routes/PersonalInfo.tsx"),
+    ...prefix("dashboard", [
+      route("finance", "routes/Finance.tsx"),
+      route("personalInfo", "routes/PersonalInfo.tsx"),
+    ]),
   ]),
 ] satisfies RouteConfig;
