@@ -1,3 +1,4 @@
+import { Form } from "react-router";
 import type { Route } from "./+types/Post";
 
 export async function clientLoader({ params }: Route.LoaderArgs) {
@@ -10,7 +11,11 @@ export async function clientLoader({ params }: Route.LoaderArgs) {
   return await res.json();
 }
 
-export async function action() {}
+export async function clientAction({ params }: Route.LoaderArgs) {
+  await fetch(`https://jsonplaceholder.typicode.com/posts/${params?.postId}`, {
+    method: "DELETE",
+  });
+}
 
 export default function Post({ loaderData }: Route.ComponentProps) {
   return (
@@ -19,6 +24,9 @@ export default function Post({ loaderData }: Route.ComponentProps) {
       <p> post id = {loaderData?.id} </p>
       <p> post id = {loaderData?.title} </p>
       <p> post id = {loaderData?.body} </p>
+      <Form method="delete">
+        <button type="submit">Delete</button>
+      </Form>
     </div>
   );
 }
